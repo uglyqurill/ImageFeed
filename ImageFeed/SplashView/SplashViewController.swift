@@ -23,7 +23,6 @@ final class SplashViewController: UIViewController {
         // Установим в `rootViewController` полученный контроллер
         window.rootViewController = tabBarController
     }
-    
 }
 
 extension SplashViewController {
