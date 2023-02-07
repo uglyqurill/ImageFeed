@@ -4,7 +4,7 @@ import Foundation
 
 final class OAuth2TokenStorage {
     private let userDefaults = UserDefaults.standard
-    private enum Keys: String {
+    private enum Keys: String, CodingKey {
         case bearerToken
     }
     
@@ -139,7 +139,6 @@ extension URLSession {
     }
     
 }
-
 
 
 

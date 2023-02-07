@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		ED4E3926298E494E0054A7B6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4E3925298E494E0054A7B6 /* NetworkService.swift */; };
-		ED4E392829902E590054A7B6 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4E392729902E590054A7B6 /* URLRequest.swift */; };
 		ED76E9C6294DDAC000C5E6C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76E9C5294DDAC000C5E6C5 /* AppDelegate.swift */; };
 		ED76E9C8294DDAC000C5E6C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76E9C7294DDAC000C5E6C5 /* SceneDelegate.swift */; };
 		ED76E9CA294DDAC000C5E6C5 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76E9C9294DDAC000C5E6C5 /* ImagesListViewController.swift */; };
@@ -27,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		ED4E3925298E494E0054A7B6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		ED4E392729902E590054A7B6 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
 		ED76E9C2294DDAC000C5E6C5 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED76E9C5294DDAC000C5E6C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED76E9C7294DDAC000C5E6C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 			children = (
 				ED4E3925298E494E0054A7B6 /* NetworkService.swift */,
 				EDA33C472992880D00711754 /* OAuthTokenResponseBody.swift */,
-				ED4E392729902E590054A7B6 /* URLRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -225,7 +222,6 @@
 				ED76E9C6294DDAC000C5E6C5 /* AppDelegate.swift in Sources */,
 				EDBA8B982985109B00B92C42 /* AuthViewController.swift in Sources */,
 				EDA0A5B42982DCFF007ACCAA /* Constants.swift in Sources */,
-				ED4E392829902E590054A7B6 /* URLRequest.swift in Sources */,
 				EDDB0857296DCAE300BEF0C7 /* SingleImageViewController.swift in Sources */,
 				EDBA8B9B2985125800B92C42 /* WebViewViewController.swift in Sources */,
 				ED76E9C8294DDAC000C5E6C5 /* SceneDelegate.swift in Sources */,
