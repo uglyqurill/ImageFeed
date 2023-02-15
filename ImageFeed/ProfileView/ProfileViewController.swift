@@ -1,9 +1,12 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
-    var labelName: UILabel?
+    var labelName: UILabel = UILabel()
     var labelLogin: UILabel?
     var labelDescription: UILabel?
+    private var profileService = ProfileService()
+    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private var userProfileData: ProfileService.Profile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -11,14 +14,7 @@ final class ProfileViewController: UIViewController {
         let profileImage = UIImage(named: "userPic")
         let profilePicture = UIImageView(image: profileImage)
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
-        
-        let labelName = UILabel()
-        labelName.text = "Екатерина Новикова"
-        labelName.textColor = .white
-        labelName.font = UIFont(name: labelName.font.fontName, size: 23) // я не разобрался, как правильно задать шрифт, подскажите пожалуйста)
-        labelName.translatesAutoresizingMaskIntoConstraints = false
-        self.labelName = labelName
-        
+    
         let labelLogin = UILabel()
         labelLogin.text = "@ekaterina_nov"
         labelLogin.textColor = .gray
@@ -43,11 +39,11 @@ final class ProfileViewController: UIViewController {
         
         
         view.addSubview(profilePicture)
-        view.addSubview(labelName)
         view.addSubview(labelLogin)
         view.addSubview(labelDescription)
         view.addSubview(exitButton)
     
+        createProfileName(profileName: labelName)
         
         NSLayoutConstraint.activate([
             profilePicture.widthAnchor.constraint(equalToConstant: 70),
@@ -68,16 +64,53 @@ final class ProfileViewController: UIViewController {
             exitButton.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor)
         ])
         
+        let token = self.oauth2TokenStorage.token ?? "No token"
+        
+        fetchProfile(token: token)
+        
+    }
+    
+    private func fetchProfile (token: String) {
+        ProfileService().fetchProfile(token) { result in
+            switch result {
+            case .success (let profile):
+                self.userProfileData = profile
+                self.labelName.text = profile.name
+                self.labelLogin!.text = profile.loginName
+                self.labelDescription!.text = profile.bio
+                return
+            case .failure(let error):
+                print("❌\(error)")
+                return
+                
+            }
+            
+        }
     }
     
     @objc
     
     func didTapLogoutButton() {
-        labelName?.text = "Вы вышли из профиля"
+        labelName.text = "Вы вышли из профиля"
         labelLogin?.removeFromSuperview()
         labelDescription?.removeFromSuperview()
         labelLogin = nil
         labelDescription = nil
+    }
+}
+
+extension ProfileViewController {
+    func creatProfileImage(profileImage: UIImageView){
+        // code
+    }
+    
+    func createProfileName(profileName: UILabel){
+        labelName.text = "Екатерина Новикова"
+        labelName.textColor = .white
+        labelName.font = UIFont(name: labelName.font.fontName, size: 23) // я не разобрался, как правильно задать шрифт, подскажите пожалуйста)
+        labelName.translatesAutoresizingMaskIntoConstraints = false
+        //self.labelName = labelName
+        view.addSubview(labelName)
     }
 }
 
