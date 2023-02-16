@@ -8,6 +8,8 @@ final class ProfileService {
     private var lastToken: String?
     static let shared = ProfileService()
     
+    private(set) var profile: Profile?
+    
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
         
@@ -76,6 +78,8 @@ final class ProfileService {
         var username: String
         var loginName: String
         var bio: String
+        private let firstName: String
+        private let lastName: String
         var name: String {
             return "\(firstName) \(lastName)"
         }
@@ -87,27 +91,5 @@ final class ProfileService {
             firstName = result.firstName
             lastName = result.lastName
         }
-
-        private let firstName: String
-        private let lastName: String
     }
 }
-
-
-
-
-
-//func profileRequest(token: String) -> URLRequest {
-//    var request = URLRequest.makeHTTPRequest(path: "/me", httpMethod: "GET")
-//    request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-//    return request
-//}
-
-//    private (set) var token: String? {
-//        get {
-//            return OAuth2TokenStorage().token
-//        }
-//        set {
-//            OAuth2TokenStorage().token = newValue
-//        }
-//    }

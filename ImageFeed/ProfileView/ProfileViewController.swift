@@ -2,8 +2,15 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     var labelName: UILabel = UILabel()
-    var labelLogin: UILabel?
-    var labelDescription: UILabel?
+    var labelLogin: UILabel = UILabel()
+    var labelDescription: UILabel = UILabel()
+    //var exitButton = UIButton()
+    var exitButton = UIButton.systemButton(
+        with: UIImage(named: "logoutIcon")!,
+        target: self,
+        action: #selector(Self.didTapLogoutButton)
+    )
+    var profilePicture: UIImageView = UIImageView()
     private var profileService = ProfileService()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private var userProfileData: ProfileService.Profile?
@@ -14,36 +21,13 @@ final class ProfileViewController: UIViewController {
         let profileImage = UIImage(named: "userPic")
         let profilePicture = UIImageView(image: profileImage)
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
-    
-        let labelLogin = UILabel()
-        labelLogin.text = "@ekaterina_nov"
-        labelLogin.textColor = .gray
-        labelLogin.font = UIFont(name: labelLogin.font.fontName, size: 13)
-        labelLogin.translatesAutoresizingMaskIntoConstraints = false
-        self.labelLogin = labelLogin
-        
-        let labelDescription = UILabel()
-        labelDescription.text = "Hello, world!"
-        labelDescription.textColor = .white
-        labelDescription.font = UIFont(name: labelDescription.font.fontName, size: 13)
-        labelDescription.translatesAutoresizingMaskIntoConstraints = false
-        self.labelDescription = labelDescription
-        
-        let exitButton = UIButton.systemButton(
-            with: UIImage(named: "logoutIcon")!,
-            target: self,
-            action: #selector(Self.didTapLogoutButton)
-        )
-        exitButton.tintColor = .red
-        exitButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         view.addSubview(profilePicture)
-        view.addSubview(labelLogin)
-        view.addSubview(labelDescription)
-        view.addSubview(exitButton)
     
         createProfileName(profileName: labelName)
+        createLabelLogin(labelLogin: labelLogin)
+        createExitButton(exitButton: exitButton)
+        createLabelDescription(labelLogin: labelDescription)
         
         NSLayoutConstraint.activate([
             profilePicture.widthAnchor.constraint(equalToConstant: 70),
@@ -76,8 +60,8 @@ final class ProfileViewController: UIViewController {
             case .success (let profile):
                 self.userProfileData = profile
                 self.labelName.text = profile.name
-                self.labelLogin!.text = profile.loginName
-                self.labelDescription!.text = profile.bio
+                self.labelLogin.text = profile.loginName
+                self.labelDescription.text = profile.bio
                 return
             case .failure(let error):
                 print("❌\(error)")
@@ -92,17 +76,14 @@ final class ProfileViewController: UIViewController {
     
     func didTapLogoutButton() {
         labelName.text = "Вы вышли из профиля"
-        labelLogin?.removeFromSuperview()
-        labelDescription?.removeFromSuperview()
-        labelLogin = nil
-        labelDescription = nil
+        labelLogin.removeFromSuperview()
+        labelDescription.removeFromSuperview()
+        labelLogin.text = "unknown"
+        labelDescription.text = "unknown"
     }
 }
 
 extension ProfileViewController {
-    func creatProfileImage(profileImage: UIImageView){
-        // code
-    }
     
     func createProfileName(profileName: UILabel){
         labelName.text = "Екатерина Новикова"
@@ -112,5 +93,33 @@ extension ProfileViewController {
         //self.labelName = labelName
         view.addSubview(labelName)
     }
+    
+    func createLabelLogin(labelLogin: UILabel){
+        labelLogin.text = "@ekaterina_nov"
+        labelLogin.textColor = .gray
+        labelLogin.font = UIFont(name: labelLogin.font.fontName, size: 13)
+        labelLogin.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(labelLogin)
+    }
+    
+    func createLabelDescription(labelLogin: UILabel){
+        labelDescription.text = "Hello, world!"
+        labelDescription.textColor = .white
+        labelDescription.font = UIFont(name: labelDescription.font.fontName, size: 13)
+        labelDescription.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(labelDescription)
+    }
+    
+    func createExitButton(exitButton: UIButton){
+        exitButton.tintColor = .red
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(exitButton)
+    }
 }
+
+//extension ProfileViewController {
+//    func updateProfileDetails(profile: Profile) {
+//
+//    }
+//}
 
