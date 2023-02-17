@@ -7,6 +7,7 @@ final class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         //super.viewDidAppear(animated)
@@ -79,6 +80,14 @@ extension SplashViewController: AuthViewControllerDelegate {
                 guard let self = self else { return }
                 switch result {
                 case .success:
+                    ProfileImageService.shared.fetchProfileImageURL(self.profileService.profile?.username ?? "nil") { result in
+                        switch result {
+                        case .success(let avatarURL):
+                            self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
+                        case .failure:
+                            return
+                          }
+                    }
                     UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
                 case .failure:
