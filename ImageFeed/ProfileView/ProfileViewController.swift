@@ -72,14 +72,6 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-//    private func fetchProfileImageURL (username: String, token: String) {
-//        ProfileImageService().fetchProfileImageURL(username: username, token: token) { result in
-//            switch result {
-//            case .success(let )
-//            }
-//        }
-//    }
-    
     @objc
     
     func didTapLogoutButton() {

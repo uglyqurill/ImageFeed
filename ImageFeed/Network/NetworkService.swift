@@ -36,7 +36,7 @@ extension URLSession {
             }
         }
         
-        let task = dataTask(with: request, completionHandler: { data, response, error in
+        let task = dataTask(with: request, completionHandler: { data, response, error in // object обёртка над дататаском
             if let data = data,
                let response = response,
                let statusCode = (response as? HTTPURLResponse)?.statusCode

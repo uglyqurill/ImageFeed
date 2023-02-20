@@ -35,60 +35,25 @@ final class OAuth2Service {
         
         guard let request = authTokenRequest(code: code) else { return }
         
-        let task = object(for: request) { [weak self] result in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            guard let self = self else { return }
                 switch result {
-                case .success(let body):
-                    let authToken = body.accessToken
-                    self.authToken = authToken
-                    completion(.success(authToken))
+                case .success(let decodedData):
+                    completion(.success(decodedData.accessToken))
+                    self.task = nil
                 case .failure(let error):
-                    self.lastCode = nil
                     completion(.failure(error))
+                    self.lastCode = nil
                 }
-                self.task = nil
-//                if error != nil {
-//                    self.lastCode = nil
-//                }
-            }
         }
         
         self.task = task
         task.resume()
     }
 }
-        
-//        let task = urlSession.dataTask(with: request) { data, response, error in
-//            DispatchQueue.main.async {                      // 12
-//                completion(.success("")): // TODO [Sprint 10]// 13
-//                self.task = nil                             // 14
-//                if error != nil {                           // 15
-//                    self.lastCode = nil                     // 16
-//                }
-//            }
-//        }
-        
-//        let task = urlSession.dataTask(with: request) { data, response, error in
-//            DispatchQueue.main.async {
-//                guard let self = self else { return }
-//                switch result {
-//                case .success(let body):
-//                    let authToken = body.accessToken
-//                    self.authToken = authToken
-//                    completion(.success(authToken))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//                self.task = nil
-//                if error != nil {
-//                    self.lastCode = nil
-//                }
-//            }
-//        }
 
 extension OAuth2Service {
-    private func object(
+    private func object( // object не понимаю
         for request: URLRequest,
         completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
     ) -> URLSessionTask {

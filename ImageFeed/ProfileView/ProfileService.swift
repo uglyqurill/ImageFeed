@@ -19,29 +19,26 @@ final class ProfileService {
         
         let request = requestUser(token: token)
         
-        let task = urlSession.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                guard let data = data else { return }
-                
-                do {
-                    let json = try JSONDecoder().decode(ProfileResult.self, from: data)
-                    let profileResult = ProfileResult(
-                        username: json.username,
-                        firstName: json.firstName,
-                        lastName: json.lastName,
-                        bio: json.bio)
-                    let profile = Profile(from: profileResult)
-                    completion(.success(profile))
-                } catch let error {
-                    completion(.failure(error))
-                }
-                
-                self.task = nil
-                if error != nil {
-                    self.lastToken = nil
-                }
-            }
-        }
+        let task = urlSession.objectTask(for: request) { (result: Result<ProfileResult, Error>) in
+             switch result {
+             case .success(let json):
+                 let profileResult = ProfileResult(
+                     username: json.username,
+                     firstName: json.firstName,
+                     lastName: json.lastName,
+                     bio: json.bio)
+                 let profile = Profile(from: profileResult)
+                 completion(.success(profile))
+             case .failure(let error):
+                 completion(.failure(error))
+             }
+             
+             self.task = nil
+             if case let .failure(error) = result {
+                 self.lastToken = nil
+             }
+         }
+        
         self.task = task
         task.resume()
     }
@@ -55,7 +52,7 @@ final class ProfileService {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") // не до конца понятна
         
         return request
     }

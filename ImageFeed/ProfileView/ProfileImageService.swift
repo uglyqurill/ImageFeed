@@ -26,71 +26,28 @@ final class ProfileImageService {
         
         let request = requestProfileImage(username: username, token: token)
         
-        let task = urlSession.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async { return }
-            guard let data = data else { return }
-            
-            do {
-                let json = try JSONDecoder().decode(UserResult.self, from: data)
-                guard let userResultURL = json.profileImage.small else { return }
-                self.avatarURL = userResultURL
-                completion(.success(userResultURL))
-                NotificationCenter.default                                     // 1
-                    .post(                                                     // 2
-                        name: ProfileImageService.DidChangeNotification,       // 3
-                        object: self,                                          // 4
-                        userInfo: ["URL": self.avatarURL])                    // передаём URL аватарки
-            } catch let error {
-                completion(.failure(error))
-            }
-            
-            self.task = nil
-            if error != nil {
-                self.lastToken = nil
-                self.lastUsername = nil
-            }
-        }
+        let task = urlSession.objectTask(for: request) { (result: Result<UserResult, Error>) in
+                    DispatchQueue.main.async { return }
+                    switch result {
+                    case .success(let json):
+                        guard let userResultURL = json.profileImage.small else { return }
+                        self.avatarURL = userResultURL
+                        completion(.success(userResultURL))
+                        NotificationCenter.default
+                            .post(
+                                name: ProfileImageService.DidChangeNotification,
+                                object: self,
+                                userInfo: ["URL": self.avatarURL])
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                    self.task = nil
+                }
         self.task = task
         task.resume()
     }
 
-    
-//    func fetchProfileImageURL(username: String, token: String, _ completion: @escaping (Result<String, Error>) -> Void) {
-//        assert(Thread.isMainThread)
-//
-//
-//        if lastToken == token { return }
-//        task?.cancel()
-//        lastToken = token
-//
-//        if lastUsername == username { return }
-//        task?.cancel()
-//        lastUsername = username
-//
-//        let request = requestProfileImage(username: username, token: token)
-//
-//        let task = urlSession.dataTask(with: request) { data, response, error in
-//            DispatchQueue.main.async { return }
-//            guard let data = data else { return }
-//
-//            do {
-//                let json = try JSONDecoder().decode(UserResult.self, from: data)
-//                guard let userResultURL = json.profileImage.small else { return }
-//                self.avatarURL = userResultURL
-//                completion(.success(userResultURL))
-//            } catch let error {
-//                completion(.failure(error))
-//            }
-//
-//            self.task = nil
-//            if error != nil {
-//                self.lastToken = nil
-//                self.lastUsername = nil
-//            }
-//        }
-//        self.task = task
-//        task.resume()
-//    }
     
     struct UserResult: Codable {
         let profileImage: ImageSize
@@ -124,8 +81,4 @@ extension ProfileImageService {
         
         return request
     }
-    
-    func setAvatarUrlString(avatarUrl: String) {
-          avatarURL = avatarUrl
-      }
 }

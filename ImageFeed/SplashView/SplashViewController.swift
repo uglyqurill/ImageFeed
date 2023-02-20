@@ -10,9 +10,7 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
-        //super.viewDidAppear(animated)
-        
-        if let token = OAuth2TokenStorage().token {
+        if let token = OAuth2TokenStorage().token { // сама конструкция
             switchToTabBarController()
             fetchProfile(token: token)
         } else {
@@ -79,14 +77,9 @@ extension SplashViewController: AuthViewControllerDelegate {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
-                case .success:
+                case .success: // 
                     ProfileImageService.shared.fetchProfileImageURL(self.profileService.profile?.username ?? "nil") { result in
-                        switch result {
-                        case .success(let avatarURL):
-                            self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
-                        case .failure:
-                            return
-                          }
+                        // something
                     }
                     UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
@@ -97,5 +90,26 @@ extension SplashViewController: AuthViewControllerDelegate {
                 }
             }
         }
+    }
+}
+
+extension SplashViewController {
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        
+        let action = UIAlertAction(
+            title: "Ок",
+            style: .cancel,
+            handler: { _ in
+                alert.dismiss(animated: true, completion: nil)
+            })
+        
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
 }
