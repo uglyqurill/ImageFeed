@@ -79,13 +79,19 @@ extension SplashViewController: AuthViewControllerDelegate {
                 switch result {
                 case .success: // 
                     ProfileImageService.shared.fetchProfileImageURL(self.profileService.profile?.username ?? "nil") { result in
-                        // something
+                        switch result {
+                        case .success(let avatarURL):
+                            DispatchQueue.main.async {
+                                self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
+                            }
+                        case .failure:
+                            return
+                        }
                     }
                     UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
                 case .failure:
                     UIBlockingProgressHUD.dismiss()
-                    // TODO [Sprint 11] Показать ошибку
                     break
                 }
             }

@@ -10,8 +10,10 @@ final class ProfileImageService {
     private var lastToken: String?
     private var lastUsername: String?
     private let token = OAuth2TokenStorage().token
+    var tokenStorage = OAuth2TokenStorage()
     
     private(set) var avatarURL: String?
+    private var userResultURL: String? = nil
     
     func fetchProfileImageURL(_ username: String, completion: @escaping (Result<String, Error>) -> Void) {
         
@@ -30,14 +32,10 @@ final class ProfileImageService {
                     DispatchQueue.main.async { return }
                     switch result {
                     case .success(let json):
-                        guard let userResultURL = json.profileImage.small else { return }
-                        self.avatarURL = userResultURL
-                        completion(.success(userResultURL))
-                        NotificationCenter.default
-                            .post(
-                                name: ProfileImageService.DidChangeNotification,
-                                object: self,
-                                userInfo: ["URL": self.avatarURL])
+                        DispatchQueue.main.async {
+                            self.userResultURL = json.profileImage.small
+                            completion(.success(json.profileImage.small ?? "nil"))
+                        }
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -80,5 +78,9 @@ extension ProfileImageService {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         return request
+    }
+    
+    func setAvatarUrlString(avatarUrl: String) {
+        self.avatarURL = avatarUrl
     }
 }

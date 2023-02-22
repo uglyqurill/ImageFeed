@@ -19,7 +19,7 @@ extension URLRequest {
 
 // MARK: - Network Connection
 
-enum NetworkError: Error {
+enum NetworkError1: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
@@ -44,12 +44,13 @@ extension URLSession {
                 if 200 ..< 300 ~= statusCode {
                     fulfillCompletion(.success(data))
                 } else {
-                    fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
+                    fulfillCompletion(.failure(NetworkError1.httpStatusCode(statusCode)))
+           
                 }
             } else if let error = error {
-                fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
+                fulfillCompletion(.failure(NetworkError1.urlRequestError(error)))
             } else {
-                fulfillCompletion(.failure(NetworkError.urlSessionError))
+                fulfillCompletion(.failure(NetworkError1.urlSessionError))
             }
         })
         task.resume()

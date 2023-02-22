@@ -40,5 +40,6 @@ extension URLSession {
     
     enum NetworkError: Error {
         case codeError
+        case httpStatusCode
     }
 }

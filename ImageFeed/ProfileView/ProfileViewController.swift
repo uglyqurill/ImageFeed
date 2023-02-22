@@ -1,16 +1,17 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     var labelName: UILabel = UILabel()
     var labelLogin: UILabel = UILabel()
     var labelDescription: UILabel = UILabel()
-    //var exitButton = UIButton()
     var exitButton = UIButton.systemButton(
         with: UIImage(named: "logoutIcon")!,
         target: self,
         action: #selector(Self.didTapLogoutButton)
     )
-    var profilePicture: UIImageView = UIImageView()
+    
+    var profilePicture = UIImageView()
     private var profileService = ProfileService()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private var userProfileData: ProfileService.Profile?
@@ -19,7 +20,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
     
         let profileImage = UIImage(named: "userPic")
-        let profilePicture = UIImageView(image: profileImage)
+        profilePicture.image = profileImage
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(profilePicture)
@@ -52,6 +53,20 @@ final class ProfileViewController: UIViewController {
         
         fetchProfile(token: token)
         
+        DispatchQueue.main.async {
+            guard
+                let profileImageURL = ProfileImageService.shared.avatarURL,
+                let url = URL(string: profileImageURL)
+            else { return }
+            
+            let processor = RoundCornerImageProcessor(cornerRadius: 35,backgroundColor: .clear)
+            
+            self.profilePicture.kf.indicatorType = .activity
+            self.profilePicture.kf.setImage(with: url)
+        }
+        
+        updateAvatar() // в функции код идентичный тому, что выше
+        
     }
     
     private func fetchProfile (token: String) {
@@ -71,6 +86,22 @@ final class ProfileViewController: UIViewController {
             
         }
     }
+    
+    private func updateAvatar() {
+            DispatchQueue.main.async {
+                guard
+                    let profileImageURL = ProfileImageService.shared.avatarURL,
+                    let url = URL(string: profileImageURL)
+                else { return }
+
+                let processor = RoundCornerImageProcessor(cornerRadius: 35,backgroundColor: .clear)
+
+                self.profilePicture.kf.indicatorType = .activity
+                self.profilePicture.kf.setImage(with: url)
+            }
+
+        }
+
     
     @objc
     
