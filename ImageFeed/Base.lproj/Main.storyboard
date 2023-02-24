@@ -13,7 +13,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="eHn-Gg-tXR">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="upu-69-E9U" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="upu-69-E9U" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="B4L-Ks-mpM">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

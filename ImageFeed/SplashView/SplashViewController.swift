@@ -14,7 +14,7 @@ final class SplashViewController: UIViewController {
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        super.viewDidAppear(animated)
-//        if let token = tokenStorage.getAuthToken() {
+//        if let token = tokenStorage.getBearerToken() {
 //            fetchProfile(token: token)
 //        } else {
 //            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
@@ -27,7 +27,7 @@ final class SplashViewController: UIViewController {
             self.profileImageService.tokenStorage.getAuthToken() != nil {
 
             let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-            UIBlockingProgressHUD.show()
+            //UIBlockingProgressHUD.show()
             fetchProfile(token: token)
         } else {
             DispatchQueue.main.async { [weak self] in
@@ -73,51 +73,42 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
     
-    private func fetchOAuthToken (_ code: String) {
-        self.oauth2Service.fetchOAuthToken(code) { [weak self] result in
+    private func fetchOAuthToken(_ code: String) {
+        oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let bearerToken):
-                self.profileImageService.tokenStorage.setBearerToken(token: bearerToken)
-                DispatchQueue.main.async {
-                    self.fetchProfile(token: bearerToken)
-                }
-            case .failure(let error):
-                //self.showAlert(error: error)
-                return
+            case .success(let token):
+                self.fetchProfile(token: token)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                // TODO [Sprint 11]
+                break
             }
         }
     }
     
-    private func fetchProfile (token: String) {
-        profileService.fetchProfile(token) {[weak self] result in
-            guard let self = self else {return}
-            switch result {
-            case .success(let profile):
-                self.queue.sync {
-                    self.profileService.setProfile(profile: profile)
-                }
-                self.queue.sync {
-                    ProfileImageService.shared.fetchProfileImageURL(
-                        self.profileService.profile?.username ?? "NIL") { result in
-                            switch result {
-                            case .success(let avatarURL):
-                                DispatchQueue.main.async {
-                                    self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
-                                }
-                            case .failure:
-                                
-                                // TODO: нужно добавить алерт для неудачной загрузки картинки профиля и передать её в экран профиля
-                                return
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let profile): //
+                    ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in
+                        switch result {
+                        case .success(let avatarURL):
+                            DispatchQueue.main.async {
+                                self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
                             }
+                        case .failure:
+                            return
                         }
+                    }
+                    UIBlockingProgressHUD.dismiss()
+                    self.switchToTabBarController()
+                case .failure:
+                    UIBlockingProgressHUD.dismiss()
+                    break
                 }
-                self.switchToTabBarController()
-                return
-                
-            case .failure(let errorCode):
-                //self.showAlert(error: errorCode)
-                return
             }
         }
     }

@@ -28,7 +28,7 @@ final class ProfileViewController: UIViewController {
         createProfileName(profileName: labelName)
         createLabelLogin(labelLogin: labelLogin)
         createExitButton(exitButton: exitButton)
-        createLabelDescription(labelLogin: labelDescription)
+        createLabelDescription(labelDescription: labelDescription)
         
         NSLayoutConstraint.activate([
             profilePicture.widthAnchor.constraint(equalToConstant: 70),
@@ -133,7 +133,7 @@ extension ProfileViewController {
         view.addSubview(labelLogin)
     }
     
-    func createLabelDescription(labelLogin: UILabel){
+    func createLabelDescription(labelDescription: UILabel){
         labelDescription.text = "Hello, world!"
         labelDescription.textColor = .white
         labelDescription.font = UIFont(name: labelDescription.font.fontName, size: 13)
