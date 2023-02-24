@@ -60,6 +60,10 @@ final class ProfileService {
         return request
     }
     
+    func setProfile (profile: Profile) {
+        self.profile = profile
+    }
+    
     struct ProfileResult: Decodable {
         let username: String
         let firstName: String
