@@ -13,6 +13,7 @@ final class ProfileViewController: UIViewController {
     
     var profilePicture = UIImageView()
     private var profileService = ProfileService()
+    private var profileImageService = ProfileImageService()
     private let swiftKeychainWrapper = SwiftKeychainWrapper()
     private var userProfileData: ProfileService.Profile?
     
@@ -49,7 +50,7 @@ final class ProfileViewController: UIViewController {
             exitButton.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor)
         ])
         
-        let token = swiftKeychainWrapper.getAuthToken() ?? "No token"
+        let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
         
         fetchProfile(token: token)
         

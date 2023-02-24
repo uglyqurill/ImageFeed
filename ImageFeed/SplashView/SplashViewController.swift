@@ -12,15 +12,6 @@ final class SplashViewController: UIViewController {
     private let queue = DispatchQueue(label: "splash.vc.queue", qos: .unspecified)
     let lastErroCode = Int()
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        if let token = tokenStorage.getBearerToken() {
-//            fetchProfile(token: token)
-//        } else {
-//            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
-//        }
-//    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.profileImageService.tokenStorage.getBearerToken() != nil &&
