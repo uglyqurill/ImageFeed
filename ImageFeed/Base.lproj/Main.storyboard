@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="76o-FU-XC0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -330,42 +330,10 @@
             </objects>
             <point key="canvasLocation" x="1383" y="-802"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="xZV-QD-f8s">
-            <objects>
-                <viewController id="76o-FU-XC0" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QGF-eZ-F1I">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vector" translatesAutoresizingMaskIntoConstraints="NO" id="NRe-pq-SgS">
-                                <rect key="frame" x="170.5" y="410.5" width="73" height="75"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="75.109999999999999" id="oCO-Vk-9K9"/>
-                                    <constraint firstAttribute="width" constant="72.519999999999996" id="pR1-az-q5y"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="xod-hV-Rhi"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="NRe-pq-SgS" firstAttribute="centerY" secondItem="QGF-eZ-F1I" secondAttribute="centerY" id="EA7-4Q-KPs"/>
-                            <constraint firstItem="NRe-pq-SgS" firstAttribute="centerX" secondItem="QGF-eZ-F1I" secondAttribute="centerX" id="SvA-my-giK"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="ag6-8x-4Mc" kind="presentation" identifier="ShowAuthenticationScreen" modalPresentationStyle="fullScreen" id="Rqf-AB-pye"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZHU-29-fth" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2116" y="-191"/>
-        </scene>
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="LikeActive" width="29" height="26"/>
-        <image name="Vector" width="73" height="75.5"/>
         <image name="auth_screen_logo" width="60" height="60"/>
         <image name="backwardsButton" width="9" height="16"/>
         <image name="nav_back_button" width="9" height="16"/>

@@ -12,6 +12,21 @@ final class SplashViewController: UIViewController {
     private let queue = DispatchQueue(label: "splash.vc.queue", qos: .unspecified)
     let lastErroCode = Int()
     
+    private let loadingScreenImage = UIImageView()
+    
+    override func viewDidLoad() {
+
+        view.backgroundColor = UIColor(named: "YP Black")
+        createLoadingScreenImage()
+
+        NSLayoutConstraint.activate([
+            loadingScreenImage.widthAnchor.constraint(equalToConstant: 75),
+            loadingScreenImage.heightAnchor.constraint(equalToConstant: 78),
+            loadingScreenImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            loadingScreenImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            ])
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.profileImageService.tokenStorage.getBearerToken() != nil &&
@@ -23,7 +38,11 @@ final class SplashViewController: UIViewController {
         } else {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.performSegue(withIdentifier: self.ShowAuthenticationScreenSegueIdentifier, sender: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                guard let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
+                authViewController.delegate = self
+                authViewController.modalPresentationStyle = .fullScreen
+                self.present(authViewController, animated: true)
             }
         }
     }
@@ -121,6 +140,12 @@ extension SplashViewController {
         
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func createLoadingScreenImage() {
+        self.loadingScreenImage.translatesAutoresizingMaskIntoConstraints = false
+        self.loadingScreenImage.image = UIImage(named: "auth_screen_logo")
+        view.addSubview(self.loadingScreenImage)
     }
 }
 
