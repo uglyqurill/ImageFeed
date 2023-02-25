@@ -33,7 +33,7 @@ final class SplashViewController: UIViewController {
             self.profileImageService.tokenStorage.getAuthToken() != nil {
 
             let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-            //UIBlockingProgressHUD.show()
+            
             fetchProfile(token: token)
         } else {
             DispatchQueue.main.async { [weak self] in
@@ -101,6 +101,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
+                UIBlockingProgressHUD.dismiss()
                 switch result {
                 case .success(let profile): //
                     ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in
@@ -110,13 +111,13 @@ extension SplashViewController: AuthViewControllerDelegate {
                                 self.profileImageService.setAvatarUrlString(avatarUrl: avatarURL)
                             }
                         case .failure:
+                            self.showAlert()
                             return
                         }
                     }
-                    UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
                 case .failure:
-                    UIBlockingProgressHUD.dismiss()
+                    self.showAlert()
                     break
                 }
             }

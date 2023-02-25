@@ -19,13 +19,13 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         let profileImage = UIImage(named: "userPic")
         profilePicture.image = profileImage
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
-
+        
         view.addSubview(profilePicture)
-    
+        
         createProfileName(profileName: labelName)
         createLabelLogin(labelLogin: labelLogin)
         createExitButton(exitButton: exitButton)
@@ -54,6 +54,30 @@ final class ProfileViewController: UIViewController {
         
         fetchProfile(token: token)
         
+        updateAvatar()
+        
+    }
+    
+    private func fetchProfile (token: String) {
+        DispatchQueue.main.async {
+            self.profileService.fetchProfile(token) { result in
+                switch result {
+                case .success (let profile):
+                    self.userProfileData = profile
+                    self.labelName.text = profile.name
+                    self.labelLogin.text = profile.loginName
+                    self.labelDescription.text = profile.bio
+                    return
+                case .failure(let error):
+                    print("❌\(error)")
+                    return
+                    
+                }
+            }
+        }
+    }
+    
+    private func updateAvatar() {
         DispatchQueue.main.async {
             guard
                 let profileImageURL = ProfileImageService.shared.avatarURL,
@@ -66,43 +90,8 @@ final class ProfileViewController: UIViewController {
             self.profilePicture.kf.setImage(with: url)
         }
         
-        updateAvatar() // в функции код идентичный тому, что выше
-        
     }
     
-    private func fetchProfile (token: String) {
-        ProfileService().fetchProfile(token) { result in
-            switch result {
-            case .success (let profile):
-                self.userProfileData = profile
-                self.labelName.text = profile.name
-                self.labelLogin.text = profile.loginName
-                self.labelDescription.text = profile.bio
-                return
-            case .failure(let error):
-                print("❌\(error)")
-                return
-                
-            }
-            
-        }
-    }
-    
-    private func updateAvatar() {
-            DispatchQueue.main.async {
-                guard
-                    let profileImageURL = ProfileImageService.shared.avatarURL,
-                    let url = URL(string: profileImageURL)
-                else { return }
-
-                let processor = RoundCornerImageProcessor(cornerRadius: 35,backgroundColor: .clear)
-
-                self.profilePicture.kf.indicatorType = .activity
-                self.profilePicture.kf.setImage(with: url)
-            }
-
-        }
-
     
     @objc
     
@@ -148,10 +137,3 @@ extension ProfileViewController {
         view.addSubview(exitButton)
     }
 }
-
-//extension ProfileViewController {
-//    func updateProfileDetails(profile: Profile) {
-//
-//    }
-//}
-
