@@ -18,12 +18,21 @@ final class OAuth2Service {
     private var lastCode: String?
     private let authTokenKey = "authToken"
 
+//    private (set) var authToken: String? {
+//        get {
+//            return SwiftKeychainWrapper().getAuthToken()
+//        }
+//        set {
+//            SwiftKeychainWrapper().setAuthToken(token: newValue)
+//        }
+//    }
+    
     private (set) var authToken: String? {
         get {
-            return SwiftKeychainWrapper().getAuthToken()
+            return SwiftKeychainWrapper().getBearerToken()
         }
         set {
-            SwiftKeychainWrapper().setAuthToken(token: newValue)
+            SwiftKeychainWrapper().setBearerToken(token: newValue)
         }
     }
 

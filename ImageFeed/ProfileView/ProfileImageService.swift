@@ -9,8 +9,7 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     private var lastToken: String?
     private var lastUsername: String?
-//    private let token = OAuth2TokenStorage().token
-//    var tokenStorage = OAuth2TokenStorage()
+
     
     var tokenStorage = SwiftKeychainWrapper()
     

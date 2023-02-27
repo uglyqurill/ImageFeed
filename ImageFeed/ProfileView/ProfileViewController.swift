@@ -1,5 +1,7 @@
 import UIKit
 import Kingfisher
+import Foundation
+
 
 final class ProfileViewController: UIViewController {
     var labelName: UILabel = UILabel()
@@ -137,3 +139,5 @@ extension ProfileViewController {
         view.addSubview(exitButton)
     }
 }
+
+

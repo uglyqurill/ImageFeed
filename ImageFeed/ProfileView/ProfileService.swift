@@ -56,7 +56,6 @@ final class ProfileService {
         return request
     }
     
-    
     struct ProfileResult: Decodable {
         let username: String
         let firstName: String
@@ -90,3 +89,5 @@ final class ProfileService {
         }
     }
 }
+
+
