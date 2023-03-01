@@ -17,15 +17,6 @@ final class OAuth2Service {
     private var task: URLSessionTask?
     private var lastCode: String?
     private let authTokenKey = "authToken"
-
-//    private (set) var authToken: String? {
-//        get {
-//            return SwiftKeychainWrapper().getAuthToken()
-//        }
-//        set {
-//            SwiftKeychainWrapper().setAuthToken(token: newValue)
-//        }
-//    }
     
     private (set) var authToken: String? {
         get {

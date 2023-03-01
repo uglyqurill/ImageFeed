@@ -5,10 +5,11 @@
 //  Created by Кирилл Брызгунов on 26.02.2023.
 //
 
-import Foundation
-/*
 
-struct PhotoResult: Codable {
+import Foundation
+
+// Структуры
+struct PhotoResult: Decodable {
     let id: String
     let createdAt: String
     let updatedAt: String
@@ -19,7 +20,7 @@ struct PhotoResult: Codable {
     let likes: Int
     let likedByUser: Bool
     let description: String
-    let user: ProfileResult
+    //let user: ProfileResult
     let urls: UrlsResult
     
     enum CodingKeys: String, CodingKey {
@@ -33,12 +34,12 @@ struct PhotoResult: Codable {
         case likes = "likes"
         case likedByUser = "liked_by_user"
         case description = "description"
-        case user = "user"
+        //case user = "user"
         case urls = "urls"
     }
 }
 
-struct UrlsResult: Codable {
+struct UrlsResult: Decodable {
     let raw: String
     let full: String
     let regular: String
@@ -54,4 +55,3 @@ struct UrlsResult: Codable {
     }
 }
 
-*/

@@ -5,18 +5,18 @@ import Foundation
 
 //fileprivate let defaultBaseURL = URL(string: "https://api.unsplash.com")!
 
-//extension URLRequest { я так полагаю, что этот файл уже не нужен???
-//    static func makeHTTPRequest(
-//        path: String,
-//        httpMethod: String,
-//        baseURL: URL = defaultBaseURL
-//    ) -> URLRequest {
-//        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
-//        request.httpMethod = httpMethod
-//        return request
-//    }
-//}
-//
+extension URLRequest { 
+    static func makeHTTPRequest(
+        path: String,
+        httpMethod: String,
+        baseURL: URL = defaultBaseURL
+    ) -> URLRequest {
+        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
+        request.httpMethod = httpMethod
+        return request
+    }
+}
+
 //// MARK: - Network Connection
 //
 //enum NetworkError1: Error {

@@ -32,7 +32,7 @@ final class SplashViewController: UIViewController {
         if self.profileImageService.tokenStorage.getBearerToken() != nil {
 
             let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-            //UIBlockingProgressHUD.show()
+            UIBlockingProgressHUD.show()
             fetchProfile(token: token)
         } else {
             DispatchQueue.main.async { [weak self] in
