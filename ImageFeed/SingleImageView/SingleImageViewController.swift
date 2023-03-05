@@ -24,6 +24,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image

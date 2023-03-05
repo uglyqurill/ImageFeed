@@ -8,12 +8,12 @@
 import Foundation
 import SwiftKeychainWrapper
 
-class ImageListService {
+class ImagesListService {
 
     //static let DidChangeNotification = Notification.Name("ImagesListServiceDidChange")
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     private let urlSession = URLSession.shared
-    static let shared = ImageListService()
+    static let shared = ImagesListService()
     
     var photos: [Photo] = []
     var photosPerPage = 10
@@ -60,7 +60,7 @@ class ImageListService {
                         self.convert(photoResult: $0)
                     }
                 }
-                NotificationCenter.default.post(name: ImageListService.didChangeNotification, object: self)
+                NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
                 self.lastLoadedPage = Page(number: nextPage, photos: photoResult)
             case .failure(let error):
                 print("Error fetching photos: \(error)")

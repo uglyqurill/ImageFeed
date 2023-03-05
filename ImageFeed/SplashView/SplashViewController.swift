@@ -29,11 +29,12 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if self.profileImageService.tokenStorage.getBearerToken() != nil {
-
-            let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
             UIBlockingProgressHUD.show()
+            let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
             fetchProfile(token: token)
+            UIBlockingProgressHUD.dismiss()
         } else {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -74,7 +75,6 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        
         UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
@@ -83,12 +83,12 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func fetchOAuthToken(_ code: String) {
+        UIBlockingProgressHUD.dismiss()
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let token):
                 self.fetchProfile(token: token)
-                UIBlockingProgressHUD.dismiss()
             case .failure:
                 // TODO [Sprint 11]
                 break
@@ -148,5 +148,4 @@ extension SplashViewController {
         view.addSubview(self.loadingScreenImage)
     }
 }
-
 
