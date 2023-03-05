@@ -103,6 +103,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 UIBlockingProgressHUD.dismiss()
                 switch result {
                 case .success(let profile): //
+                    self.startLoadingImages()
                     ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in
                         switch result {
                         case .success(let avatarURL):
@@ -121,6 +122,26 @@ extension SplashViewController: AuthViewControllerDelegate {
                 }
             }
         }
+    }
+    
+//    private func fetchProfileImageURL(username: String, completion: @escaping (Result<Void, Error>) -> Void) {
+//        let profileImageURLService = profileImageService
+//        profileImageURLService.fetchProfileImageURL(username) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success:
+//                self.startLoadingImages()
+//                completion(.success(()))
+//
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+    
+    private func startLoadingImages() {
+        let imagesService = ImagesListService.shared
+        imagesService.fetchPhotosNextPage()
     }
 }
 

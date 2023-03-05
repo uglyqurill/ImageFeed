@@ -8,6 +8,7 @@
 
 import Foundation
 
+/*
 // Структуры
 struct PhotoResult: Decodable {
     let id: String
@@ -39,19 +40,23 @@ struct PhotoResult: Decodable {
     }
 }
 
-struct UrlsResult: Decodable {
-    let raw: String
-    let full: String
-    let regular: String
-    let small: String
-    let thumb: String
-    
-    enum CodingKeys: String, CodingKey {
-        case raw = "raw"
-        case full = "full"
-        case regular = "regular"
-        case small = "small"
-        case thumb = "thumb"
-    }
-}
+*/
+
+
+
+//struct UrlsResult: Decodable {
+//    let raw: String
+//    let full: String
+//    let regular: String
+//    let small: String
+//    let thumb: String
+//
+//    enum CodingKeys: String, CodingKey {
+//        case raw = "raw"
+//        case full = "full"
+//        case regular = "regular"
+//        case small = "small"
+//        case thumb = "thumb"
+//    }
+//}
 
