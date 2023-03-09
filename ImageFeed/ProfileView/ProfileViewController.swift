@@ -1,4 +1,5 @@
 import UIKit
+import WebKit
 import Kingfisher
 import Foundation
 
@@ -98,11 +99,49 @@ final class ProfileViewController: UIViewController {
     @objc
     
     func didTapLogoutButton() {
-        labelName.text = "Вы вышли из профиля"
-        labelLogin.removeFromSuperview()
-        labelDescription.removeFromSuperview()
-        labelLogin.text = "unknown"
-        labelDescription.text = "unknown"
+        
+        let alert = UIAlertController(title: "Logout",
+                                      message: "Are you sure you want to logout?",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+            //self?.logout()
+            self?.logout()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+            //nothing
+        }
+                                     ))
+        present(alert, animated: true)
+    }
+        
+}
+
+extension ProfileViewController {
+    
+    private func logout() {
+        clearStorage()
+        switchToSplashScreen()
+    }
+    
+    func clearStorage() {
+        // Очищаем все куки из хранилища.
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        // Запрашиваем все данные из локального хранилища.
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+           // Массив полученных записей удаляем из хранилища.
+           records.forEach { record in
+              WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+           }
+        }
+    }
+    
+    func switchToSplashScreen() {
+        guard let window = UIApplication.shared.windows.first else { fatalError("Fatal Error") }
+        let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: "AuthViewController")
+        window.rootViewController = authViewController
     }
 }
 
