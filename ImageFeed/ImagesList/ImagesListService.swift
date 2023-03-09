@@ -10,10 +10,14 @@ import SwiftKeychainWrapper
 
 class ImagesListService {
 
-    //static let DidChangeNotification = Notification.Name("ImagesListServiceDidChange")
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     private let urlSession = URLSession.shared
     static let shared = ImagesListService()
+    //private let httpClient: HttpClient
+    
+//    init(httpClient: HttpClient) {
+//        self.httpClient = httpClient
+//    }
     
     private lazy var dateFormatter: ISO8601DateFormatter = {
         return ISO8601DateFormatter()
@@ -110,27 +114,71 @@ class ImagesListService {
 
 }
 
-//struct Photo {
-//    let id: String
-//    let size: CGSize
-//    let createdAt: Date?
-//    let welcomeDescription: String?
-//    let thumbImageURL: String
-//    let largeImageURL: String
-//    let isLiked: Bool
+extension ImagesListService {
+//    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+//        let request = isLike ? likeRequest(photoId: photoId) : unlikeRequest(photoId: photoId)
 //
-//    init(from result: PhotoResult) {
-//        id = result.id
-//        size = CGSize(width: result.width, height: result.height)
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-//        createdAt = dateFormatter.date(from: result.createdAt)
-//        welcomeDescription = result.description
-//        thumbImageURL = result.urls.thumb
-//        largeImageURL = result.urls.full
-//        isLiked = result.likedByUser
+//        let task = urlSession.objectTask(for: request, completion: { [weak self] (result: Result<[PhotoResult], Error>) in
+//            //let task = httpsClient.data(for: request) { result in
+//            switch result {
+//            case .success:
+//                guard let updatedPhotoIndex = self!.photos.firstIndex(where: { $0.id == photoId })
+//                else { return }
+//                let oldPhoto = self!.photos[updatedPhotoIndex]
+//                let newPhoto = oldPhoto.withToggledLike()
+//                self!.photos = self!.photos.withReplaced(itemAt: updatedPhotoIndex, newValue: newPhoto)
+//                completion(.success(()))
+//
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//        task.resume()
 //    }
-//}
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+         enum LikeError: Error {
+             case photoNotFound
+         }
+
+         let request = isLike ? likeRequest(photoId: photoId) : unlikeRequest(photoId: photoId)
+
+         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+             guard let self else { return }
+             switch result {
+             case .success:
+                 if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                     let photo = self.photos[index]
+                     let newPhoto = Photo(
+                         id: photo.id,
+                         size: photo.size,
+                         createdAt: photo.createdAt,
+                         welcomeDescription: photo.welcomeDescription,
+                         thumbImageURL: photo.thumbImageURL,
+                         largeImageURL: photo.largeImageURL,
+                         isLiked: !photo.isLiked
+                     )
+                     self.photos[index] = newPhoto
+                     completion(.success(()))
+                 } else {
+                     completion(.failure(LikeError.photoNotFound))
+                 }
+             case .failure(let error):
+                 completion(.failure(error))
+             }
+         }
+
+         task.resume()
+     }
+    
+    func likeRequest(photoId: String) -> URLRequest {
+        makeRequest(path: "/photos/\(photoId)/like", httpMethod: "POST")
+    }
+    
+    func unlikeRequest(photoId: String) -> URLRequest {
+        makeRequest(path: "/photos/\(photoId)/like", httpMethod: "DELETE")
+    }
+}
 
 struct Photo {
     let id: String
@@ -172,6 +220,10 @@ extension Array {
         result[index] = newValue
         return result
     }
+}
+
+struct LikeResult: Decodable {
+    let photo: PhotoResult
 }
 
 struct PhotoResult: Decodable {

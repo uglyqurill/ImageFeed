@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ImagesListCellDelegate: AnyObject {
-    //func imageListCellDidTapLike(_ cell: ImagesListCell)
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
 }
 
 final class ImagesListCell: UITableViewCell {
@@ -13,6 +13,10 @@ final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
     var imageURL: URL?
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        delegate?.imageListCellDidTapLike(self)
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

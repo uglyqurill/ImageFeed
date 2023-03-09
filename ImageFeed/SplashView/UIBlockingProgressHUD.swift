@@ -15,4 +15,8 @@ final class UIBlockingProgressHUD {
         window?.isUserInteractionEnabled = true
         ProgressHUD.dismiss()
     }
+    
+    static func showError(_ message: String? = nil) {
+        ProgressHUD.showError(message)
+    }
 }

@@ -106,7 +106,7 @@ extension ImagesListViewController: UITableViewDataSource {
                 }
             }
             setDescriptionLabel(for: cell, photo: photo)
-            setLikeButtonImage(for: cell, isLiked: photo.isLiked)
+            setIsLiked(for: cell, isLiked: photo.isLiked)
             cell.delegate = self
         }
         return cell
@@ -126,7 +126,7 @@ extension ImagesListViewController: UITableViewDataSource {
         }
     }
     
-    private func setLikeButtonImage(for cell: ImagesListCell, isLiked: Bool) {
+    private func setIsLiked(for cell: ImagesListCell, isLiked: Bool) {
         let likeButtonImageName = isLiked ? "like_button_on" : "like_button_off"
         let likeButtonImage = UIImage(named: likeButtonImageName)
         cell.likeButton.setImage(likeButtonImage, for: .normal)
@@ -154,39 +154,28 @@ extension ImagesListViewController {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == ShowSingleImageSegueIdentifier {
-//            let viewController = segue.destination as! SingleImageViewController
-//            let indexPath = sender as! IndexPath
-//            let image = UIImage(named: photosName[indexPath.row])
-//            viewController.image = image
-//        } else {
-//            super.prepare(for: segue, sender: sender)
-//        }
-//    }
 }
 
 extension ImagesListViewController: ImagesListCellDelegate {
-//    func imageListCellDidTapLike(_ cell: ImagesListCell) {
-//        guard let indexPath = tableView.indexPath(for: cell) else { return }
-//        let photo = photos[indexPath.row]
-//
-//        UIBlockingProgressHUD.show()
-//        imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] result in
-//            UIBlockingProgressHUD.dismiss()
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success:
-//                self.photos = self.imagesListService.photos
-//                self.setLikeButtonImage(for: cell, isLiked: self.photos[indexPath.row].isLiked)
-//
-//            case .failure:
-//                UIBlockingProgressHUD.showError(NSLocalizedString("Something went wrong. Please try again.", comment: ""))
-//            }
-//        }
-//    }
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            guard let self = self else { return }
+
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                self.setIsLiked(for: cell, isLiked: self.photos[indexPath.row].isLiked)
+
+            case .failure:
+                UIBlockingProgressHUD.showError(NSLocalizedString("Something went wrong. Please try again.", comment: ""))
+            }
+        }
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let photo = photos[indexPath.row]
