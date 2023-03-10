@@ -87,7 +87,7 @@ extension ImagesListViewController: UITableViewDataSource {
             cell.cellImage.kf.indicatorType = .activity
             cell.cellImage.kf.setImage(
                 with: url,
-                placeholder: UIImage(named: "thumb_image_placeholder"),
+                placeholder: UIImage(named: "card"),
                 options: [KingfisherOptionsInfoItem.loadDiskFileSynchronously]
             ) { [weak cell, weak tableView] result in
                 guard let cell = cell else { return }
