@@ -113,8 +113,8 @@ final class ProfileViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { _ in
             //nothing
-        }
-                                     ))
+        }))
+        
         present(alert, animated: true)
     }
         
