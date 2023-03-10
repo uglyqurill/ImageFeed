@@ -141,15 +141,25 @@ extension ImagesListViewController: UITableViewDelegate {
 }
 
 extension ImagesListViewController {
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == showSingleImageSegueIdentifier {
+//            guard
+//                let viewController = segue.destination as? SingleImageViewController,
+//                let indexPath = sender as? IndexPath
+//            else { fatalError("Failed to prepare for \(showSingleImageSegueIdentifier)") }
+//            if let largeURL = URL(string: photos[indexPath.item].largeImageURL) {
+//                viewController.largeImageUrl = largeURL
+//            }
+//        } else {
+//            super.prepare(for: segue, sender: sender)
+//        }
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
-            guard
-                let viewController = segue.destination as? SingleImageViewController,
-                let indexPath = sender as? IndexPath
-            else { fatalError("Failed to prepare for \(showSingleImageSegueIdentifier)") }
-//            if let largeURL = URL(string: photos[indexPath.item].largeImageURL) {
-//                viewController.image = largeURL
-//            }
+            let vc = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            vc.largeImageUrl = imagesListService.getLargeImageCellURL(indexPath: indexPath)
         } else {
             super.prepare(for: segue, sender: sender)
         }

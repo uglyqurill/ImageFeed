@@ -23,6 +23,8 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .ypBlack
+        
         let profileImage = UIImage(named: "userPic")
         profilePicture.image = profileImage
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
@@ -104,12 +106,12 @@ final class ProfileViewController: UIViewController {
                                       message: "Are you sure you want to logout?",
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
             //self?.logout()
             self?.logout()
         }))
         
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: { _ in
             //nothing
         }
                                      ))
@@ -179,4 +181,7 @@ extension ProfileViewController {
     }
 }
 
+extension UIColor {
+    static let ypBlack = UIColor(named: "ypBlack")!
+}
 

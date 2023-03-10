@@ -178,6 +178,12 @@ extension ImagesListService {
     func unlikeRequest(photoId: String) -> URLRequest {
         makeRequest(path: "/photos/\(photoId)/like", httpMethod: "DELETE")
     }
+    
+    func getLargeImageCellURL(indexPath: IndexPath) -> URL {
+        let stringUrl = photos[indexPath.row].largeImageURL
+        guard let url = URL(string: stringUrl) else { fatalError("Don't have URL for large photo")}
+        return url
+    }
 }
 
 struct Photo {
