@@ -26,7 +26,7 @@ final class ProfileService {
                     username: json.username,
                     firstName: json.firstName,
                     lastName: json.lastName,
-                    bio: json.bio)
+                    bio: json.bio ?? "")
                 let profile = Profile(from: profileResult)
                 completion(.success(profile))
             case .failure(let error):
@@ -60,7 +60,7 @@ final class ProfileService {
         let username: String
         let firstName: String
         let lastName: String
-        let bio: String
+        let bio: String?
         
         enum CodingKeys: String, CodingKey {
             case username = "username"
@@ -83,7 +83,7 @@ final class ProfileService {
         init(from result: ProfileResult) {
             username = result.username
             loginName = "@" + result.username
-            bio = result.bio
+            bio = result.bio ?? ""
             firstName = result.firstName
             lastName = result.lastName
         }

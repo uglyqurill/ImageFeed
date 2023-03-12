@@ -29,11 +29,12 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if self.profileImageService.tokenStorage.getBearerToken() != nil {
-
+            UIBlockingProgressHUD.show()
             let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-            //UIBlockingProgressHUD.show()
             fetchProfile(token: token)
+            UIBlockingProgressHUD.dismiss()
         } else {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -74,7 +75,6 @@ extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        
         UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
@@ -88,9 +88,9 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let token):
                 self.fetchProfile(token: token)
-                UIBlockingProgressHUD.dismiss()
             case .failure:
-                // TODO [Sprint 11]
+                UIBlockingProgressHUD.dismiss()
+                self.showAlert()
                 break
             }
         }
@@ -100,7 +100,6 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                UIBlockingProgressHUD.dismiss()
                 switch result {
                 case .success(let profile): //
                     ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in
@@ -114,8 +113,10 @@ extension SplashViewController: AuthViewControllerDelegate {
                             return
                         }
                     }
+                    UIBlockingProgressHUD.dismiss()
                     self.switchToTabBarController()
                 case .failure:
+                    UIBlockingProgressHUD.dismiss()
                     self.showAlert()
                     break
                 }

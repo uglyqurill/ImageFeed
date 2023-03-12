@@ -109,16 +109,15 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController {
     
     func createProfileName(profileName: UILabel){
-        labelName.text = "Екатерина Новикова"
+        labelName.text = "Username"
         labelName.textColor = .white
         labelName.font = UIFont(name: labelName.font.fontName, size: 23) // я не разобрался, как правильно задать шрифт, подскажите пожалуйста)
         labelName.translatesAutoresizingMaskIntoConstraints = false
-        //self.labelName = labelName
         view.addSubview(labelName)
     }
     
     func createLabelLogin(labelLogin: UILabel){
-        labelLogin.text = "@ekaterina_nov"
+        labelLogin.text = "@userlogin"
         labelLogin.textColor = .gray
         labelLogin.font = UIFont(name: labelLogin.font.fontName, size: 13)
         labelLogin.translatesAutoresizingMaskIntoConstraints = false

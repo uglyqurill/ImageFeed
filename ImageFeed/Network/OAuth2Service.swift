@@ -18,15 +18,6 @@ final class OAuth2Service {
     private var lastCode: String?
     private let authTokenKey = "authToken"
 
-//    private (set) var authToken: String? {
-//        get {
-//            return SwiftKeychainWrapper().getAuthToken()
-//        }
-//        set {
-//            SwiftKeychainWrapper().setAuthToken(token: newValue)
-//        }
-//    }
-    
     private (set) var authToken: String? {
         get {
             return SwiftKeychainWrapper().getBearerToken()
@@ -67,18 +58,6 @@ final class OAuth2Service {
 }
 
 extension OAuth2Service {
-//    private func object(
-//        for request: URLRequest,
-//        completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
-//    ) -> URLSessionTask {
-//        let decoder = JSONDecoder()
-//        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-//            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
-//                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
-//            }
-//            completion(response)
-//        }
-//    }
 
     private func authTokenRequest(code: String) -> URLRequest? {
         let urlString = "https://unsplash.com/oauth/token"
