@@ -21,4 +21,5 @@ final class SwiftKeychainWrapper {
     func getBearerToken() -> String? {
         return KeychainWrapper.standard.string(forKey: "Bearer token")
     }
+    
 }
