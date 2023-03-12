@@ -26,6 +26,9 @@ final class ProfileViewController: UIViewController {
         profilePicture.image = profileImage
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
         
+        profilePicture.layer.masksToBounds = true
+        profilePicture.layer.cornerRadius = 35
+        
         view.addSubview(profilePicture)
         
         createProfileName(profileName: labelName)
