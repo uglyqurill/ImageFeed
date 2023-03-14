@@ -1,10 +1,3 @@
-//
-//  Constants.swift
-//  ImageFeed
-//
-//  Created by Кирилл Брызгунов on 26.01.2023.
-//
-
 import Foundation
 
 let accessKey = "h9u9IDtscwhLMDSevmIPK0YXBMwvUZVfSCEbykIdB1E"

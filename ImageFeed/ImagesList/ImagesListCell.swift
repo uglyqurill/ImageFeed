@@ -21,8 +21,6 @@ final class ImagesListCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageURL = nil
-        // NOTE: This is debatable decision, but for best performance
-        // we better cancel currently unneeded tasks
         cellImage.kf.cancelDownloadTask()
     }
 }

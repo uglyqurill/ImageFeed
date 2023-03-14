@@ -146,12 +146,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="LfF-7W-7a4" userLabel="ImageView">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jiq-LA-saG">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jiq-LA-saG">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="LfF-7W-7a4" userLabel="ImageView">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="132"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="LfF-7W-7a4" secondAttribute="bottom" id="gp1-NJ-Oss"/>
+                                    <constraint firstItem="LfF-7W-7a4" firstAttribute="top" secondItem="Jiq-LA-saG" secondAttribute="top" id="rmv-lh-Mnr"/>
+                                    <constraint firstItem="LfF-7W-7a4" firstAttribute="leading" secondItem="Jiq-LA-saG" secondAttribute="leading" id="u1p-7y-dFg"/>
+                                    <constraint firstItem="LfF-7W-7a4" firstAttribute="trailing" secondItem="Jiq-LA-saG" secondAttribute="trailing" id="wZR-Fu-atz"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="1dl-wb-L6D"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="u7g-2g-j5S"/>
                                 <connections>
@@ -159,7 +167,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgF-FK-Ppm">
-                                <rect key="frame" x="8" y="56" width="48" height="48"/>
+                                <rect key="frame" x="0.0" y="48" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="TKi-u6-HOY"/>
                                     <constraint firstAttribute="width" constant="48" id="q7c-Dd-e4D"/>
@@ -171,7 +179,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ery-Bo-OAe">
-                                <rect key="frame" x="182" y="776" width="50" height="50"/>
+                                <rect key="frame" x="182" y="780" width="50" height="50"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="sharingButton"/>
                                 <connections>
@@ -183,18 +191,14 @@
                         <color key="backgroundColor" name="YP Black"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="mgF-FK-Ppm" firstAttribute="top" secondItem="hdo-UD-o2b" secondAttribute="top" constant="8" id="4TN-gB-NXm"/>
-                            <constraint firstItem="Jiq-LA-saG" firstAttribute="top" secondItem="LfF-7W-7a4" secondAttribute="top" id="DGg-V3-zwe"/>
-                            <constraint firstItem="Jiq-LA-saG" firstAttribute="leading" secondItem="LfF-7W-7a4" secondAttribute="leading" id="DVD-py-05r"/>
+                            <constraint firstItem="mgF-FK-Ppm" firstAttribute="top" secondItem="hdo-UD-o2b" secondAttribute="top" id="4TN-gB-NXm"/>
                             <constraint firstAttribute="bottom" secondItem="Jiq-LA-saG" secondAttribute="bottom" id="Gyh-1m-PHx"/>
                             <constraint firstItem="Jiq-LA-saG" firstAttribute="trailing" secondItem="hdo-UD-o2b" secondAttribute="trailing" id="Hgo-zq-Jrn"/>
-                            <constraint firstItem="hdo-UD-o2b" firstAttribute="bottom" secondItem="Ery-Bo-OAe" secondAttribute="bottom" constant="36" id="OKN-bU-c08"/>
-                            <constraint firstItem="Jiq-LA-saG" firstAttribute="trailing" secondItem="LfF-7W-7a4" secondAttribute="trailing" id="SWY-54-UUM"/>
+                            <constraint firstItem="hdo-UD-o2b" firstAttribute="bottom" secondItem="Ery-Bo-OAe" secondAttribute="bottom" constant="32" id="OKN-bU-c08"/>
                             <constraint firstItem="Jiq-LA-saG" firstAttribute="top" secondItem="k4K-SI-Ppx" secondAttribute="top" id="SZw-J2-izl"/>
                             <constraint firstItem="Ery-Bo-OAe" firstAttribute="centerX" secondItem="hdo-UD-o2b" secondAttribute="centerX" id="dRH-E7-E9L"/>
-                            <constraint firstItem="mgF-FK-Ppm" firstAttribute="leading" secondItem="hdo-UD-o2b" secondAttribute="leading" constant="8" id="qxw-Nz-9hq"/>
+                            <constraint firstItem="mgF-FK-Ppm" firstAttribute="leading" secondItem="hdo-UD-o2b" secondAttribute="leading" id="qxw-Nz-9hq"/>
                             <constraint firstItem="Jiq-LA-saG" firstAttribute="leading" secondItem="hdo-UD-o2b" secondAttribute="leading" id="wur-9O-Tiy"/>
-                            <constraint firstItem="Jiq-LA-saG" firstAttribute="bottom" secondItem="LfF-7W-7a4" secondAttribute="bottom" id="yAJ-zF-8zh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VZs-dq-tQR"/>

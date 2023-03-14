@@ -1,10 +1,3 @@
-//
-//  URLSessionExtension.swift
-//  ImageFeed
-//
-//  Created by Кирилл Брызгунов on 19.02.2023.
-//
-
 import Foundation
 
 extension URLSession {

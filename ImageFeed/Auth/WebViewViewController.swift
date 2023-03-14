@@ -72,7 +72,8 @@ extension WebViewViewController: WKNavigationDelegate {
     }
 
     private func code(from navigationAction: WKNavigationAction) -> String? {
-        print(navigationAction.request.url)
+        print(navigationAction.request.url ?? "none")
+        
         if
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),

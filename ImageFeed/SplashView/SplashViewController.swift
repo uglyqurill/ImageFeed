@@ -16,7 +16,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
 
-        view.backgroundColor = UIColor(named: "YP Black")
+        view.backgroundColor = UIColor(named: "ypBlack")
         createLoadingScreenImage()
 
         NSLayoutConstraint.activate([

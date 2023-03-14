@@ -29,6 +29,9 @@ final class ProfileViewController: UIViewController {
         profilePicture.image = profileImage
         profilePicture.translatesAutoresizingMaskIntoConstraints = false
         
+        profilePicture.layer.cornerRadius = 35
+        profilePicture.layer.masksToBounds = true
+        
         view.addSubview(profilePicture)
         
         createProfileName(profileName: labelName)
@@ -89,8 +92,6 @@ final class ProfileViewController: UIViewController {
                 let url = URL(string: profileImageURL)
             else { return }
             
-            let processor = RoundCornerImageProcessor(cornerRadius: 35,backgroundColor: .clear)
-            
             self.profilePicture.kf.indicatorType = .activity
             self.profilePicture.kf.setImage(with: url)
         }
@@ -102,12 +103,11 @@ final class ProfileViewController: UIViewController {
     
     func didTapLogoutButton() {
         
-        let alert = UIAlertController(title: "Logout",
-                                      message: "Are you sure you want to logout?",
+        let alert = UIAlertController(title: "Пока, пока!",
+                                      message: "Уверены что хотите выйти?",
                                       preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] _ in
-            //self?.logout()
             self?.logout()
         }))
         
@@ -151,16 +151,15 @@ extension ProfileViewController {
     func createProfileName(profileName: UILabel){
         labelName.text = "User Name"
         labelName.textColor = .white
-        labelName.font = UIFont(name: labelName.font.fontName, size: 23) // я не разобрался, как правильно задать шрифт, подскажите пожалуйста)
+        labelName.font = UIFont.boldSystemFont(ofSize: 23)
         labelName.translatesAutoresizingMaskIntoConstraints = false
-        //self.labelName = labelName
         view.addSubview(labelName)
     }
     
     func createLabelLogin(labelLogin: UILabel){
         labelLogin.text = "@user"
         labelLogin.textColor = .gray
-        labelLogin.font = UIFont(name: labelLogin.font.fontName, size: 13)
+        labelLogin.font = UIFont.systemFont(ofSize: 13)
         labelLogin.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(labelLogin)
     }
@@ -168,7 +167,7 @@ extension ProfileViewController {
     func createLabelDescription(labelDescription: UILabel){
         labelDescription.text = "Hello, world!"
         labelDescription.textColor = .white
-        labelDescription.font = UIFont(name: labelDescription.font.fontName, size: 13)
+        labelDescription.font = UIFont.systemFont(ofSize: 13)
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(labelDescription)
     }

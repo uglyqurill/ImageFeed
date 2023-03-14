@@ -93,9 +93,6 @@ extension ImagesListViewController: UITableViewDataSource {
                 guard let cell = cell else { return }
                 switch result {
                 case .success:
-                    // IMPORTANT: The callback may be called after the cell is reused for a different url.
-                    // So we test if the cell was reused or not.
-                    // If the cell.imageURL has changed, than callback is comming from an old indexPath.
                     if cell.imageURL == url {
                         guard let tableView = tableView else { return }
                         tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -141,20 +138,6 @@ extension ImagesListViewController: UITableViewDelegate {
 }
 
 extension ImagesListViewController {
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == showSingleImageSegueIdentifier {
-//            guard
-//                let viewController = segue.destination as? SingleImageViewController,
-//                let indexPath = sender as? IndexPath
-//            else { fatalError("Failed to prepare for \(showSingleImageSegueIdentifier)") }
-//            if let largeURL = URL(string: photos[indexPath.item].largeImageURL) {
-//                viewController.largeImageUrl = largeURL
-//            }
-//        } else {
-//            super.prepare(for: segue, sender: sender)
-//        }
-//    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
             let vc = segue.destination as! SingleImageViewController
