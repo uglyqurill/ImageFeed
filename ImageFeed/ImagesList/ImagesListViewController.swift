@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     // MARK: - Private properties
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
@@ -97,9 +97,9 @@ extension ImagesListViewController: UITableViewDataSource {
                         guard let tableView = tableView else { return }
                         tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
-
                 case .failure:
-                    break // do nothing
+                    self.showAlert()
+                    break
                 }
             }
             setDescriptionLabel(for: cell, photo: photo)
@@ -146,6 +146,23 @@ extension ImagesListViewController {
         } else {
             super.prepare(for: segue, sender: sender)
         }
+    }
+    
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        
+        let action = UIAlertAction(
+            title: "Ок",
+            style: .cancel,
+            handler: { _ in
+                alert.dismiss(animated: true, completion: nil)
+            })
+        
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

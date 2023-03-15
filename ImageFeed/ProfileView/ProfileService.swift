@@ -44,10 +44,10 @@ final class ProfileService {
     
     func requestUser(token: String) -> URLRequest {
         
-        let userURLString = defaultBaseURLString + "me"
+        let userURLString = Constants.defaultBaseURLString + "me"
         
         guard let url = URL(string: userURLString)
-        else { fatalError("Failed to create URL") }
+        else { assertionFailure("Failed to create URL"); return URLRequest(url: URL(string: "")!) } // вот так правильно?
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

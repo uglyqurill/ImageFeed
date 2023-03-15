@@ -1,18 +1,17 @@
-import Foundation
 import Kingfisher
 import UIKit
 
 final class SingleImageViewController: UIViewController {
     var largeImageUrl: URL?
     
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var scrollView: UIScrollView!
     
-    @IBAction func didTapBackButton() {
+    @IBAction private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didTapShareButton(_ sender: Any) {
+    @IBAction private func didTapShareButton(_ sender: Any) {
         guard let unwrapImage = imageView.image else { return }
         let shareMenu = UIActivityViewController(
             activityItems: [unwrapImage],
@@ -59,7 +58,7 @@ final class SingleImageViewController: UIViewController {
     }
     
     
-    func downloadLargeImage() {
+    private func downloadLargeImage() {
         UIBlockingProgressHUD.show()
         DispatchQueue.main.async {
             self.imageView.kf.indicatorType = .activity

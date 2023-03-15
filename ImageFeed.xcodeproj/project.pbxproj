@@ -27,7 +27,7 @@
 		EDBAECBC29A62AE600EC1894 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EDBAECBB29A62AE600EC1894 /* Kingfisher */; };
 		EDBAECC929A81D7E00EC1894 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = EDBAECC829A81D7E00EC1894 /* SwiftKeychainWrapper */; };
 		EDBAECCB29A8C47300EC1894 /* SwiftKeychainWrapper .swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBAECCA29A8C47300EC1894 /* SwiftKeychainWrapper .swift */; };
-		EDBAECD229A8F84C00EC1894 /* TabBaerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBAECD129A8F84C00EC1894 /* TabBaerViewController.swift */; };
+		EDBAECD229A8F84C00EC1894 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBAECD129A8F84C00EC1894 /* TabBarViewController.swift */; };
 		EDBAECD829AB5FB500EC1894 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBAECD729AB5FB500EC1894 /* ImagesListService.swift */; };
 		EDBAECDA29AB644500EC1894 /* PhotoStructures .swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBAECD929AB644500EC1894 /* PhotoStructures .swift */; };
 		EDC34A1129A293400093DBA7 /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC34A1029A293400093DBA7 /* URLSessionExtension.swift */; };
@@ -56,7 +56,7 @@
 		EDBA8B972985109B00B92C42 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		EDBA8B9A2985125800B92C42 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		EDBAECCA29A8C47300EC1894 /* SwiftKeychainWrapper .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftKeychainWrapper .swift"; sourceTree = "<group>"; };
-		EDBAECD129A8F84C00EC1894 /* TabBaerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBaerViewController.swift; sourceTree = "<group>"; };
+		EDBAECD129A8F84C00EC1894 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		EDBAECD729AB5FB500EC1894 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		EDBAECD929AB644500EC1894 /* PhotoStructures .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoStructures .swift"; sourceTree = "<group>"; };
 		EDC34A1029A293400093DBA7 /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
@@ -79,6 +79,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED63668129C0842C00C3BF6A /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				EDBAECD129A8F84C00EC1894 /* TabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		ED76E9B9294DDAC000C5E6C5 = {
 			isa = PBXGroup;
 			children = (
@@ -107,8 +115,8 @@
 				EDDB0859296DD00800BEF0C7 /* ProfileView */,
 				EDDB0858296DCFE700BEF0C7 /* SingleImageView */,
 				EDD18AFC295A4A71009B4DFE /* ImagesList */,
+				ED63668129C0842C00C3BF6A /* TabBar */,
 				ED76E9CB294DDAC000C5E6C5 /* Main.storyboard */,
-				EDBAECD129A8F84C00EC1894 /* TabBaerViewController.swift */,
 				ED76E9D0294DDAC300C5E6C5 /* LaunchScreen.storyboard */,
 				ED76E9CE294DDAC300C5E6C5 /* Assets.xcassets */,
 				ED76E9D3294DDAC300C5E6C5 /* Info.plist */,
@@ -272,7 +280,7 @@
 				EDA33C58299AEFB000711754 /* UIBlockingProgressHUD.swift in Sources */,
 				EDBA8B982985109B00B92C42 /* AuthViewController.swift in Sources */,
 				EDA0A5B42982DCFF007ACCAA /* Constants.swift in Sources */,
-				EDBAECD229A8F84C00EC1894 /* TabBaerViewController.swift in Sources */,
+				EDBAECD229A8F84C00EC1894 /* TabBarViewController.swift in Sources */,
 				EDDB0857296DCAE300BEF0C7 /* SingleImageViewController.swift in Sources */,
 				EDC34A1129A293400093DBA7 /* URLSessionExtension.swift in Sources */,
 				EDBA8B9B2985125800B92C42 /* WebViewViewController.swift in Sources */,

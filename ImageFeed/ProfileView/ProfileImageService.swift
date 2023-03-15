@@ -1,9 +1,8 @@
 import UIKit
-import Foundation
 
 final class ProfileImageService {
     
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private let urlSession = URLSession.shared
     static let shared = ProfileImageService()
     private var task: URLSessionTask?
@@ -70,7 +69,7 @@ final class ProfileImageService {
 extension ProfileImageService {
     func requestProfileImage(username: String, token: String) -> URLRequest {
         
-        let unsplashGetProfileImageURLString = defaultBaseURLString + "users/" + username
+        let unsplashGetProfileImageURLString = Constants.defaultBaseURLString + "users/" + username
         
         guard let url = URL(string: unsplashGetProfileImageURLString)
         else { fatalError("Failed to create URL")}

@@ -1,5 +1,4 @@
 import UIKit
-import Foundation
 import ProgressHUD
 
 final class SplashViewController: UIViewController {
@@ -10,7 +9,6 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     private let queue = DispatchQueue(label: "splash.vc.queue", qos: .unspecified)
-    let lastErroCode = Int()
     
     private let loadingScreenImage = UIImageView()
     
@@ -30,9 +28,8 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if self.profileImageService.tokenStorage.getBearerToken() != nil {
+        if let token = profileImageService.tokenStorage.getBearerToken() {
             UIBlockingProgressHUD.show()
-            let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
             fetchProfile(token: token)
             UIBlockingProgressHUD.dismiss()
         } else {
@@ -125,21 +122,6 @@ extension SplashViewController: AuthViewControllerDelegate {
             }
         }
     }
-    
-//    private func fetchProfileImageURL(username: String, completion: @escaping (Result<Void, Error>) -> Void) {
-//        let profileImageURLService = profileImageService
-//        profileImageURLService.fetchProfileImageURL(username) { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success:
-//                self.startLoadingImages()
-//                completion(.success(()))
-//
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
     
     private func startLoadingImages() {
         let imagesService = ImagesListService.shared

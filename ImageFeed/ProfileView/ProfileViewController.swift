@@ -1,8 +1,6 @@
 import UIKit
 import WebKit
 import Kingfisher
-import Foundation
-
 
 final class ProfileViewController: UIViewController {
     var labelName: UILabel = UILabel()
@@ -14,11 +12,12 @@ final class ProfileViewController: UIViewController {
         action: #selector(Self.didTapLogoutButton)
     )
     
-    var profilePicture = UIImageView()
-    private var profileService = ProfileService()
+    private var profilePicture = UIImageView()
+    private var profileService = ProfileService.shared
     private var profileImageService = ProfileImageService()
     private let swiftKeychainWrapper = SwiftKeychainWrapper()
     private var userProfileData: ProfileService.Profile?
+    private var oAuth2Service = OAuth2Service()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,41 +58,34 @@ final class ProfileViewController: UIViewController {
         ])
         
         let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-        
-        fetchProfile(token: token)
-        
+        //fetchProfile(token: token)
+        updateProfile()
         updateAvatar()
         
     }
     
-    private func fetchProfile (token: String) {
-        DispatchQueue.main.async {
-            self.profileService.fetchProfile(token) { result in
-                switch result {
-                case .success (let profile):
-                    self.userProfileData = profile
-                    self.labelName.text = profile.name
-                    self.labelLogin.text = profile.loginName
-                    self.labelDescription.text = profile.bio
-                    return
-                case .failure(let error):
-                    print("❌\(error)")
-                    return
-                    
-                }
-            }
+//    private func fetchProfile (token: String) {  Я заменил эту функцию. Так лучше?
+    
+    private func updateProfile() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, let profile = self.profileService.profile else { return }
+            self.labelName.text = profile.name
+            self.labelLogin.text = profile.loginName
+            self.labelDescription.text = profile.bio
         }
     }
     
     private func updateAvatar() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             guard
                 let profileImageURL = ProfileImageService.shared.avatarURL,
                 let url = URL(string: profileImageURL)
             else { return }
             
+            guard let self = self else { return }
             self.profilePicture.kf.indicatorType = .activity
             self.profilePicture.kf.setImage(with: url)
+
         }
         
     }
@@ -123,10 +115,11 @@ extension ProfileViewController {
     
     private func logout() {
         clearStorage()
+        clearToken()
         switchToSplashScreen()
     }
     
-    func clearStorage() {
+    private func clearStorage() {
         // Очищаем все куки из хранилища.
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
         // Запрашиваем все данные из локального хранилища.
@@ -138,7 +131,11 @@ extension ProfileViewController {
         }
     }
     
-    func switchToSplashScreen() {
+    private func clearToken() {
+        swiftKeychainWrapper.deleteBearerToken()
+    }
+    
+    private func switchToSplashScreen() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Fatal Error") }
         let authViewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "AuthViewController")
@@ -148,7 +145,7 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     
-    func createProfileName(profileName: UILabel){
+    private func createProfileName(profileName: UILabel){
         labelName.text = "User Name"
         labelName.textColor = .white
         labelName.font = UIFont.boldSystemFont(ofSize: 23)
@@ -156,7 +153,7 @@ extension ProfileViewController {
         view.addSubview(labelName)
     }
     
-    func createLabelLogin(labelLogin: UILabel){
+    private func createLabelLogin(labelLogin: UILabel){
         labelLogin.text = "@user"
         labelLogin.textColor = .gray
         labelLogin.font = UIFont.systemFont(ofSize: 13)
@@ -164,7 +161,7 @@ extension ProfileViewController {
         view.addSubview(labelLogin)
     }
     
-    func createLabelDescription(labelDescription: UILabel){
+    private func createLabelDescription(labelDescription: UILabel){
         labelDescription.text = "Hello, world!"
         labelDescription.textColor = .white
         labelDescription.font = UIFont.systemFont(ofSize: 13)
@@ -172,7 +169,7 @@ extension ProfileViewController {
         view.addSubview(labelDescription)
     }
     
-    func createExitButton(exitButton: UIButton){
+    private func createExitButton(exitButton: UIButton){
         exitButton.tintColor = .red
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)

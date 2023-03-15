@@ -1,7 +1,6 @@
 import Foundation
-import SwiftKeychainWrapper
 
-class ImagesListService {
+final class ImagesListService {
 
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     private let urlSession = URLSession.shared
@@ -13,7 +12,7 @@ class ImagesListService {
     
     private let notificationCenter = NotificationCenter.default
     var photos: [Photo] = []
-    var photosPerPage = 10
+    private var photosPerPage = 10
     private var loadingPage: Page?
     private var lastLoadedPage: Page?
     
@@ -74,7 +73,7 @@ class ImagesListService {
     private func makeRequest(
         path: String,
         httpMethod: String = "GET",
-        baseURL: URL = URL(string: "https://api.unsplash.com")!
+        baseURL: URL = Constants.baseURL
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod

@@ -1,6 +1,4 @@
 import UIKit
-import Foundation
-
 // MARK: - HTTP Requset
 
 enum HttpClientError: Error {
