@@ -27,13 +27,6 @@ final class WebViewViewController: UIViewController & WebViewControllerProtocol 
         
         webView.navigationDelegate = self
         presenter?.viewDidLoad()
-//        estimatedProgressObservation = webView.observe(
-//                    \.estimatedProgress,
-//                    options: [],
-//                    changeHandler: { [weak self] _, _ in
-//                        guard let self = self else { return }
-//                        self.updateProgress()
-//                    })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
