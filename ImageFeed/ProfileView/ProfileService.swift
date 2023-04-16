@@ -56,37 +56,38 @@ final class ProfileService {
         return request
     }
     
-    struct ProfileResult: Decodable {
-        let username: String
-        let firstName: String
-        let lastName: String
-        let bio: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case username = "username"
-            case firstName = "first_name"
-            case lastName = "last_name"
-            case bio = "bio"
-        }
+}
+
+struct ProfileResult: Decodable {
+    let username: String
+    let firstName: String
+    let lastName: String
+    let bio: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case username = "username"
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case bio = "bio"
+    }
+}
+
+struct Profile {
+    var username: String
+    var loginName: String
+    var bio: String
+    private let firstName: String
+    private let lastName: String
+    var name: String {
+        return "\(firstName) \(lastName)"
     }
 
-    struct Profile {
-        var username: String
-        var loginName: String
-        var bio: String
-        private let firstName: String
-        private let lastName: String
-        var name: String {
-            return "\(firstName) \(lastName)"
-        }
-
-        init(from result: ProfileResult) {
-            username = result.username
-            loginName = "@" + result.username
-            bio = result.bio ?? ""
-            firstName = result.firstName
-            lastName = result.lastName
-        }
+    init(from result: ProfileResult) {
+        username = result.username
+        loginName = "@" + result.username
+        bio = result.bio ?? ""
+        firstName = result.firstName
+        lastName = result.lastName
     }
 }
 

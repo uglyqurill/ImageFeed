@@ -2,7 +2,15 @@ import UIKit
 import WebKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+
+protocol ProfileViewControllerProtocol: AnyObject {
+    //var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateProfile()
+    func updateAvatar()
+    func configureProfile()
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     var labelName: UILabel = UILabel()
     var labelLogin: UILabel = UILabel()
     var labelDescription: UILabel = UILabel()
@@ -15,9 +23,12 @@ final class ProfileViewController: UIViewController {
     private var profilePicture = UIImageView()
     private var profileService = ProfileService.shared
     private var profileImageService = ProfileImageService()
-    private let swiftKeychainWrapper = SwiftKeychainWrapper()
-    private var userProfileData: ProfileService.Profile?
+    private let tokenStorage = SwiftKeychainWrapper()
     private var oAuth2Service = OAuth2Service()
+    
+    lazy var presenter: ProfileViewPresenterProtocol = {
+        ProfileViewPresenter(viewController: self)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +44,7 @@ final class ProfileViewController: UIViewController {
         
         view.addSubview(profilePicture)
         
-        createProfileName(profileName: labelName)
-        createLabelLogin(labelLogin: labelLogin)
-        createExitButton(exitButton: exitButton)
-        createLabelDescription(labelDescription: labelDescription)
+        configureProfile()
         
         NSLayoutConstraint.activate([
             profilePicture.widthAnchor.constraint(equalToConstant: 70),
@@ -57,31 +65,35 @@ final class ProfileViewController: UIViewController {
             exitButton.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor)
         ])
         
-        let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
+        //let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
         //fetchProfile(token: token)
         updateProfile()
         updateAvatar()
         
     }
     
-//    private func fetchProfile (token: String) {  Я заменил эту функцию. Так лучше?
+    func configureProfile() {
+        createProfileName(profileName: labelName)
+        createLabelLogin(labelLogin: labelLogin)
+        createExitButton(exitButton: exitButton)
+        createLabelDescription(labelDescription: labelDescription)
+    }
     
-    private func updateProfile() {
+    internal func updateProfile() {
+        guard let profile = presenter.getProfile() else { return }
+        
         DispatchQueue.main.async { [weak self] in
-            guard let self = self, let profile = self.profileService.profile else { return }
+            guard let self = self else { return }
             self.labelName.text = profile.name
             self.labelLogin.text = profile.loginName
             self.labelDescription.text = profile.bio
         }
     }
+
     
-    private func updateAvatar() {
+    internal func updateAvatar() { // 2
+        guard let url = presenter.getAvatar() else { return }
         DispatchQueue.main.async { [weak self] in
-            guard
-                let profileImageURL = ProfileImageService.shared.avatarURL,
-                let url = URL(string: profileImageURL)
-            else { return }
-            
             guard let self = self else { return }
             self.profilePicture.kf.indicatorType = .activity
             self.profilePicture.kf.setImage(with: url)
@@ -113,10 +125,8 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController {
     
-    private func logout() {
-        clearStorage()
-        clearToken()
-        switchToSplashScreen()
+    private func logout() { // 3
+        presenter.logout()
     }
     
     private func clearStorage() {
@@ -132,7 +142,7 @@ extension ProfileViewController {
     }
     
     private func clearToken() {
-        swiftKeychainWrapper.deleteBearerToken()
+        tokenStorage.deleteBearerToken()
     }
     
     private func switchToSplashScreen() {
@@ -144,6 +154,8 @@ extension ProfileViewController {
 }
 
 extension ProfileViewController {
+    
+    
     
     private func createProfileName(profileName: UILabel){
         labelName.text = "User Name"

@@ -28,7 +28,7 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let token = profileImageService.tokenStorage.getBearerToken() {
+        if let token = tokenStorage.getBearerToken() {
             UIBlockingProgressHUD.show()
             fetchProfile(token: token)
             UIBlockingProgressHUD.dismiss()
