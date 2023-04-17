@@ -34,6 +34,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         super.viewDidLoad()
         
         view.backgroundColor = .ypBlack
+        exitButton.accessibilityIdentifier = "logout button"
         
         let profileImage = UIImage(named: "userPic")
         profilePicture.image = profileImage
