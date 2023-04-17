@@ -54,16 +54,4 @@ final class ProfileViewTest: XCTestCase {
         
         XCTAssertTrue(presenter.getAvatarCalled)
     }
-    
-//    func testLogout() {
-//        let viewController = ProfileViewController()
-//        let presenter = ProfileViewPresenterSpy()
-//        
-//        viewController.presenter = presenter
-//        presenter.view = viewController
-//        _ = viewController.view
-//        
-//        XCTAssertTrue(presenter.logoutCalled)
-//    }
-
 }
