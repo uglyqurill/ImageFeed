@@ -73,7 +73,7 @@ final class ImagesListService {
     private func makeRequest(
         path: String,
         httpMethod: String = "GET",
-        baseURL: URL = Constants.baseURL
+        baseURL: URL = Constants.defaultBaseURL
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
