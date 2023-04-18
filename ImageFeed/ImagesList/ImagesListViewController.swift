@@ -42,8 +42,6 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
         }
         
         presenter.getPhotos()
-
-        //photos = imagesListService.photos //1
     }
     
     // MARK: - Override methods
@@ -69,7 +67,6 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
     
     private func updateTableViewAnimated() {
         let oldPhotoCount = photos.count
-        //let newPhotoCount = imagesListService.photos.count
         let newPhotoCount = presenter.getPhotos().count
         photos = presenter.getPhotos()
         

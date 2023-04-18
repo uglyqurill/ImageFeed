@@ -47,7 +47,7 @@ final class ProfileService {
         let userURLString = Constants.defaultBaseURLString + "me"
         
         guard let url = URL(string: userURLString)
-        else { assertionFailure("Failed to create URL"); return URLRequest(url: URL(string: "")!) } // вот так правильно?
+        else { assertionFailure("Failed to create URL"); return URLRequest(url: URL(string: "")!) } 
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

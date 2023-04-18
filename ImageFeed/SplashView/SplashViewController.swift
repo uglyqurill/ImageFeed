@@ -15,6 +15,7 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
 
         view.backgroundColor = UIColor(named: "ypBlack")
+        view.accessibilityIdentifier = "SplashViewControllerIdentifier"
         createLoadingScreenImage()
 
         NSLayoutConstraint.activate([
@@ -99,7 +100,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
-                case .success(let profile): //
+                case .success(let profile):
                     self.startLoadingImages()
                     ProfileImageService.shared.fetchProfileImageURL(profile.username) { result in
                         switch result {

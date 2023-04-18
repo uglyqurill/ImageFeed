@@ -4,6 +4,8 @@ import WebKit
 
 class Image_FeedUITests: XCTestCase {
     private let app = XCUIApplication() // переменная приложения
+    private let login = "kirill.bryzgunov.01@gmail.com"
+    private let password = "Block01glock"
     
     override func setUpWithError() throws {
         continueAfterFailure = false // настройка выполнения тестов, которая прекратит выполнения тестов, если в тесте что-то пошло не так
@@ -22,14 +24,14 @@ class Image_FeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
 
         loginTextField.tap()
-        loginTextField.typeText("email")
+        loginTextField.typeText(login)
         webView.swipeUp()
 
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
 
         passwordTextField.tap()
-        passwordTextField.typeText("password")
+        passwordTextField.typeText(password)
         webView.swipeUp()
 
         webView.buttons["Login"].tap()
@@ -70,16 +72,18 @@ class Image_FeedUITests: XCTestCase {
     }
     
     func testProfile() throws {
-        func testProfile() throws {
-            sleep(3)
-            app.tabBars.buttons.element(boundBy: 1).tap()
-           
-            XCTAssertTrue(app.staticTexts["Kirill Bryzgunov"].exists)
-            XCTAssertTrue(app.staticTexts["@uglyqurill"].exists)
-            
-            app.buttons["logout button"].tap()
-            
-            app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
-        }
+        sleep(3)
+        app.tabBars.buttons.element(boundBy: 1).tap()
+        sleep(5)
+        
+        XCTAssertTrue(app.staticTexts["Kirill Bryzgunov"].exists)
+        XCTAssertTrue(app.staticTexts["@uglyqurill"].exists)
+        
+        app.buttons["logout button"].tap()
+        
+        app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
+        sleep(5)
+    
+        XCTAssertTrue(app.buttons["Authenticate"].exists)
     }
 }

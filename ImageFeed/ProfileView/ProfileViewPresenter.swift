@@ -2,7 +2,6 @@ import Foundation
 import WebKit
 
 protocol ProfileViewPresenterProtocol: AnyObject {
-    //var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
     func getProfile() -> Profile?
     func getAvatar() -> URL?
@@ -27,7 +26,6 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     // MARK: - Methods
     func viewDidLoad() {
         view?.configureProfile()
-        //tokenStorage.getBearerToken()
     }
     
     func getProfile() -> Profile? {

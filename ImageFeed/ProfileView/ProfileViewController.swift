@@ -4,7 +4,6 @@ import Kingfisher
 
 
 protocol ProfileViewControllerProtocol: AnyObject {
-    //var presenter: ProfileViewPresenterProtocol? { get set }
     func updateProfile()
     func updateAvatar()
     func configureProfile()
@@ -65,9 +64,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
             exitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -26),
             exitButton.centerYAnchor.constraint(equalTo: profilePicture.centerYAnchor)
         ])
-        
-        //let token = profileImageService.tokenStorage.getBearerToken() ?? "nil"
-        //fetchProfile(token: token)
+    
         updateProfile()
         updateAvatar()
         

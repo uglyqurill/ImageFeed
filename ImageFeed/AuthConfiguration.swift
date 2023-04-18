@@ -5,9 +5,8 @@ struct Constants {
     static let secretKey = "Ip1ortflUIXhh_r0e1Qs37a01SzAor5fMsr8StqFqm0"
     static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"
-    static let defaultBaseURL = URL(string: "https://api.unsplash.com")!
     static let defaultBaseURLString = "https://api.unsplash.com/"
-    static let baseURL = URL(string: "https://api.unsplash.com")!
+    static let defaultBaseURL = URL(string: defaultBaseURLString)!
     static let unsplashUrlString = "https://unsplash.com/oauth/token"
     static let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 }
@@ -19,15 +18,6 @@ struct AuthConfiguration {
     let accessScope: String
     let defaultBaseURL: URL
     let authURLString: String
-    
-//    init(accessKey: String, secretKey: String, redirectURI: String, accessScope: String, authURLString: String, defaultBaseURL: URL) {
-//        self.accessKey = accessKey
-//        self.secretKey = secretKey
-//        self.redirectURI = redirectURI
-//        self.accessScope = accessScope
-//        self.defaultBaseURL = defaultBaseURL
-//        self.authURLString = authURLString
-//    }
     
     static var standard: AuthConfiguration {
         return AuthConfiguration(accessKey: Constants.accessKey,
